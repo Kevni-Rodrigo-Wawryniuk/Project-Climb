@@ -28,6 +28,21 @@ public class MainCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       // PositionTheCamera();
     }
+    void PositionTheCamera()
+    {
+        // Asi hacemos que dependiendo de la posicion del jugador la camara se mueva de su posicion
+        if(positionPlayer.position.y < 10)
+        {
+            transform.position = new Vector3(0, 0, -10);
+        }
+        else if(positionPlayer.position.y >= 10)
+        {
+            transform.position = new Vector3(0, 20, -10);
+        }
+
+    }
+
 }
+

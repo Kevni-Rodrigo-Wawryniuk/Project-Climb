@@ -7,12 +7,12 @@ public class MainPlayer : MonoBehaviour
     [SerializeField] public static MainPlayer mainPlayer;
 
     private Rigidbody2D rgbPlayer;
+    private Animator animPlayer;
 
     [Header("Moviment")]
     [SerializeField] public bool move;
     [SerializeField] float speedMoviment, forceJump;
-    [SerializeField] int numberOfJump;
-    private int maxJumps = 1;
+    [SerializeField] int numberOfJump, maxJumps;
 
     [Header("Detect Floor")]
     [SerializeField] Vector2 sizeDetector;
@@ -32,6 +32,7 @@ public class MainPlayer : MonoBehaviour
             mainPlayer = this;
         }
         rgbPlayer = GetComponent<Rigidbody2D>();
+        animPlayer = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -55,18 +56,41 @@ public class MainPlayer : MonoBehaviour
     {
         if(move == true)
         {
-            float movimentX = Input.GetAxis("Horizontal");
+            // Derecha
+            if(Input.GetKey(KeyCode.D))
+            {
+                rgbPlayer.velocity = new Vector2(speedMoviment, rgbPlayer.velocity.y);
+                animPlayer.SetBool("Move", true);
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            // Izquierda
+            else if(Input.GetKey(KeyCode.A))
+            {
+                rgbPlayer.velocity = new Vector2(-speedMoviment, rgbPlayer.velocity.y);
+                animPlayer.SetBool("Move", true);
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                rgbPlayer.velocity = new Vector2(rgbPlayer.velocity.x, rgbPlayer.velocity.y);
+                animPlayer.SetBool("Move", false);
+            }
+            
+            if (DetectFloor())
+            {
+                numberOfJump = maxJumps;
+            }
 
-            rgbPlayer.velocity = new Vector2(movimentX * speedMoviment, rgbPlayer.velocity.y);
-
-            if(numberOfJump > 0 && Input.GetKeyDown(KeyCode.Space))
+            if (numberOfJump > 0 && Input.GetKeyDown(KeyCode.Space))
             {
                 rgbPlayer.AddForce(new Vector2(rgbPlayer.velocity.x, forceJump));
                 numberOfJump--;
+                animPlayer.SetBool("Jump", true);
             }
-            if(DetectFloor())
+
+            if(numberOfJump == maxJumps)
             {
-                numberOfJump = maxJumps;
+                animPlayer.SetBool("Jump", false);
             }
         }
     }
