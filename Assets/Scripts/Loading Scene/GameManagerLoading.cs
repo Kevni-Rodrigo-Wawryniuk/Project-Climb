@@ -31,9 +31,9 @@ public class GameManagerLoading : MonoBehaviour
 
        scene = PlayerPrefs.GetInt("Scene", 0);
         
-        StartCoroutine(LoadScenes(scene));
+       StartCoroutine(LoadScenes(scene));
 
-        Play = false;
+       Play = false;
     }
 
     // Update is called once per frame

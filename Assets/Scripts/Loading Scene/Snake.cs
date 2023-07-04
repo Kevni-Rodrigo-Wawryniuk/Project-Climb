@@ -24,7 +24,6 @@ public class Snake : MonoBehaviour
 
     public List<GameObject> tailLst = new List<GameObject>();
 
-
     public GameObject tailPrefab;
 
     [SerializeField] public bool Muerta;
@@ -46,6 +45,8 @@ public class Snake : MonoBehaviour
 
     void StartProgram()
     {
+        Time.timeScale = 1;
+
         if(snake == null)
         {
             snake = this;

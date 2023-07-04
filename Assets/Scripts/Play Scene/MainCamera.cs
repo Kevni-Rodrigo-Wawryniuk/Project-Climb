@@ -35,20 +35,64 @@ public class MainCamera : MonoBehaviour
     {
         // Asi hacemos que dependiendo de la posicion del jugador la camara se mueva de su posicion
         // Estas son las primeras posiciones en las que el jugador se puede mover 
-        // posicion inicial
-        if(positionPlayer.position.x < 7.5f && positionPlayer.position.y < 4)
+        // posicion inicial 
+        if(positionPlayer.position.x < 9f && positionPlayer.position.y < 5)
         {
             transform.position = new Vector3(0, 0, -10);
         }
         // 2 posicion
-        if(positionPlayer.position.x >= 7.5f && positionPlayer.position.y < 4)
+        if(positionPlayer.position.x > 9f && positionPlayer.position.y < 5)
         {
-            transform.position = new Vector3(15, 0, -10);
+            transform.position = new Vector3(18, 0, -10);
         }
         // 3 posicion
-        if(positionPlayer.position.x >= 22.5f && positionPlayer.position.y < 4)
+        if(positionPlayer.position.x > 27f && positionPlayer.position.y < 5)
         {
-            transform.position = new Vector3(30, 0, -10);
+            transform.position = new Vector3(36, 0, -10);
+        }
+
+
+        if(positionPlayer.position.y > 5)
+        {
+            transform.position = new Vector3(36, 10, -10);
+        }
+        if(positionPlayer.position.y > 15)
+        {
+            transform.position = new Vector3(36, 20, -10);
+        }
+        if(positionPlayer.position.y > 25)
+        {
+            transform.position = new Vector3(36, 30, -10);
+        }
+        if(positionPlayer.position.y > 35)
+        {
+            transform.position = new Vector3(36, 40, -10);
+        }
+        if (positionPlayer.position.y > 46)
+        {
+            transform.position = new Vector3(36, 50, -10);
+        }
+        
+
+        // Primera puerta 
+        if (positionPlayer.position.y > 35 && positionPlayer.position.y < 46)
+        {
+            if (positionPlayer.position.x > 45)
+            {
+                transform.position = new Vector3(54, 41.5f, -10);
+            }
+            if (positionPlayer.position.x > 63)
+            {
+                transform.position = new Vector3(72, 41.5f, -10);
+            }
+            if (positionPlayer.position.x < 27)
+            {
+                transform.position = new Vector3(18, 41.5f, -10);
+            }
+            if (positionPlayer.position.x < 9)
+            {
+                transform.position = new Vector3(0, 41.5f, -10);
+            }
         }
     }
 
