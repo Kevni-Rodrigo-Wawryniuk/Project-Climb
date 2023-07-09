@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class MainCamera : MonoBehaviour
 {
     [SerializeField] public static MainCamera mainCamera;
@@ -9,7 +11,6 @@ public class MainCamera : MonoBehaviour
     [Header("Detect Position Player")]
     [SerializeField] bool Player;
     [SerializeField] Transform positionPlayer;
-
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,7 @@ public class MainCamera : MonoBehaviour
     {
       PositionTheCamera();
     }
+
     void PositionTheCamera()
     {
         // Asi hacemos que dependiendo de la posicion del jugador la camara se mueva de su posicion
@@ -95,6 +97,5 @@ public class MainCamera : MonoBehaviour
             }
         }
     }
-
 }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Audio;
 
 public class GameManagerPlay : MonoBehaviour
 {
@@ -24,7 +25,10 @@ public class GameManagerPlay : MonoBehaviour
     [SerializeField] TextMeshProUGUI textTimeGame;
     [SerializeField] TextMeshProUGUI textHeigthPlayer;
     [SerializeField] int minut, second;
-    [SerializeField] float microSecond;
+    [SerializeField] float microSecond, timer;
+
+    [Header("Music")]
+    [SerializeField] AudioSource musicPlay;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +48,11 @@ public class GameManagerPlay : MonoBehaviour
         playerWin = false;
         pause = false;
 
+        if(play == true)
+        {
+            musicPlay.Play();
+        }
+
         positionPlayer = GameObject.FindGameObjectWithTag("Player").transform;
     }
     // Update is called once per frame
@@ -60,15 +69,18 @@ public class GameManagerPlay : MonoBehaviour
         Screens[2].enabled = playerWin;
         Screens[3].enabled = pause;
 
-        textHeigthPlayer.text = "Height: " + positionPlayer.position.y;
+        // Asi es para que imprima los numeros enteros sin los decimales
+        textHeigthPlayer.text = "Height: " + (int)positionPlayer.position.y;
         textTimeGame.text = "Time The Game: " + minut + ":" + second;
 
-        if(microSecond == 60)
+        microSecond += timer * Time.deltaTime;
+
+        if (microSecond >= 60)
         {
             second++;
             microSecond = 0;
         }
-        if(second == 60)
+        if(second >= 60)
         {
             minut++;
             second = 0;
@@ -77,7 +89,6 @@ public class GameManagerPlay : MonoBehaviour
         // Jugando
         if(playerDead == false && playerWin == false)
         {
-            microSecond += 1 * Time.deltaTime;
             if(Input.GetKeyDown(KeyCode.Escape))
             {
                 pause = !pause;
@@ -86,12 +97,13 @@ public class GameManagerPlay : MonoBehaviour
 
         if(pause == true)
         {
-            microSecond = 0;
+            timer = 0;
             Time.timeScale = 0;
             play = false;
         }
         else
         {
+            timer = 45;
             Time.timeScale = 1;
             play = true;
         }
@@ -99,12 +111,14 @@ public class GameManagerPlay : MonoBehaviour
         // Perdiste
         if(playerDead == true && playerWin == false)
         {
+            musicPlay.Stop();
             microSecond = 0;
             Time.timeScale = 0;
         }
         // ganaste
         if (playerDead == false && playerWin == true)
         {
+            musicPlay.Stop();
             microSecond = 0;
             Time.timeScale = 0;
         }

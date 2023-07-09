@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.Audio;
+
 public class MainPlayer : MonoBehaviour
 {
     [SerializeField] public static MainPlayer mainPlayer;
@@ -27,6 +29,11 @@ public class MainPlayer : MonoBehaviour
 
     [Header("Live")]
     [SerializeField] int live;
+
+    [Header("Efect Song")]
+    [SerializeField] AudioSource moveSong;
+    [SerializeField] float timepoCam, endTimeCam;
+    [SerializeField] AudioSource jumpSong;
 
     // Start is called before the first frame update
     void Start()
@@ -88,14 +95,20 @@ public class MainPlayer : MonoBehaviour
     {
         if(move == true && live > 0)
         {
-            if (DetectFloor())
-            {
-                numberOfJump = maxJumps;
-            }
-
+           
             // Derecha
             if (Input.GetKey(KeyCode.D))
             {
+                timepoCam += 1 * Time.deltaTime;
+                if(timepoCam >= endTimeCam)
+                {
+                    moveSong.Play();
+                    timepoCam = 0;
+                }
+                if(!DetectFloor())
+                {
+                    moveSong.Stop();
+                }
                 rgbPlayer.velocity = new Vector2(speedMoviment, rgbPlayer.velocity.y);
                 animPlayer.SetBool("Move", true);
                 transform.localScale = new Vector3(1, 1, 1);
@@ -103,27 +116,47 @@ public class MainPlayer : MonoBehaviour
             // Izquierda
             else if(Input.GetKey(KeyCode.A))
             {
+                timepoCam += 1 * Time.deltaTime;
+                if (timepoCam >= endTimeCam)
+                {
+                    moveSong.Play();
+                    timepoCam = 0;
+                }
+                if (!DetectFloor())
+                {
+                    moveSong.Stop();
+                }
                 rgbPlayer.velocity = new Vector2(-speedMoviment, rgbPlayer.velocity.y);
                 animPlayer.SetBool("Move", true);
                 transform.localScale = new Vector3(-1, 1, 1);
             }
-            else
+            else 
             {
+                moveSong.Stop();
                 rgbPlayer.velocity = new Vector2(0, rgbPlayer.velocity.y);
                 animPlayer.SetBool("Move", false);
             }
-            
+
+
+            if (DetectFloor())
+            {
+                numberOfJump = maxJumps;
+            }
             if (numberOfJump > 0 && Input.GetKeyDown(KeyCode.Space))
             {
+                timepoCam = 0;
+                jumpSong.Play();
+                moveSong.Stop();
                 rgbPlayer.AddForce(new Vector2(rgbPlayer.velocity.x, forceJump));
                 numberOfJump--;
                 animPlayer.SetBool("Jump", true);
             }
 
-            if(numberOfJump == maxJumps)
+            if (numberOfJump == maxJumps)
             {
                 animPlayer.SetBool("Jump", false);
             }
+
         }
     }
     void StateOfLife()
@@ -161,6 +194,7 @@ public class MainPlayer : MonoBehaviour
             if(collider2D.gameObject.CompareTag("Lever"))
             {
                 collider2D.gameObject.GetComponent<Lever>().OpenorClose();
+                moveSong.Play();
             }
         }
 

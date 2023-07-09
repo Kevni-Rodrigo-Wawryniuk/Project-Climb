@@ -28,6 +28,9 @@ public class GameManagerStat : MonoBehaviour
     [SerializeField] float speedGroundX, speedCloudsX, speedTreesX, speedSkyX;
     [SerializeField] Canvas[] canvasInScene;
 
+    [Header("Music")]
+    [SerializeField] AudioSource music;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -134,6 +137,7 @@ public class GameManagerStat : MonoBehaviour
             cloudsList.Add(Instantiate(objectsInScene[7], new Vector2(Random.Range(30, 100), Random.Range(-0.8f, 4)), Quaternion.identity));
         }
 
+        music.Play();
     }
 
     // Update is called once per frame
