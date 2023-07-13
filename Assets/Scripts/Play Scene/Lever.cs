@@ -17,6 +17,9 @@ public class Lever : MonoBehaviour
     [SerializeField] bool openFirstDoor, openSecondDoor;
     [SerializeField] public int levers;
 
+    [SerializeField] bool firstLever, secondLever;
+    [SerializeField] float timetutorial, endTutorial;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,23 +45,22 @@ public class Lever : MonoBehaviour
     void OpenDoor()
     {
        // Primera puerta para acceder a la zoma de juego
-                if (openFirstDoor == false)
-                {
+        if (openFirstDoor == false)
+        {
             spriteRenderers[0].enabled = true;
             spriteRenderers[1].enabled = false;
                     doors[0].transform.position = Vector3.MoveTowards(doors[0].transform.position, pointOpenOrClose[0].transform.position, speedY);
-                }
-                if (openFirstDoor == true)
-                {
-
+        }
+        if (openFirstDoor == true)
+        {
             spriteRenderers[0].enabled = false;
             spriteRenderers[1].enabled = true;
             doors[0].transform.position = Vector3.MoveTowards(doors[0].transform.position, pointOpenOrClose[1].transform.position, speedY);
-                }
-                if(positionPlayer.position.x > 27)
-                {
-                    openFirstDoor = false;
-                }
+        }
+        if(positionPlayer.position.x > 27)
+        {
+          openFirstDoor = false;
+        }
 
         if( openSecondDoor == false)
         {

@@ -24,6 +24,7 @@ public class GameManagerPlay : MonoBehaviour
     [SerializeField] Canvas[] Screens;
     [SerializeField] TextMeshProUGUI textTimeGame;
     [SerializeField] TextMeshProUGUI textHeigthPlayer;
+    [SerializeField] TextMeshProUGUI textPointsPlayer;
     [SerializeField] int minut, second;
     [SerializeField] float microSecond, timer;
 
@@ -72,6 +73,7 @@ public class GameManagerPlay : MonoBehaviour
         // Asi es para que imprima los numeros enteros sin los decimales
         textHeigthPlayer.text = "Height: " + (int)positionPlayer.position.y;
         textTimeGame.text = "Time The Game: " + minut + ":" + second;
+        textPointsPlayer.text = "Points: " + MainPlayer.mainPlayer.points;
 
         microSecond += timer * Time.deltaTime;
 
@@ -133,6 +135,7 @@ public class GameManagerPlay : MonoBehaviour
                 Lever.lever.spriteRenderers[2].enabled = false;
                 Lever.lever.spriteRenderers[3].enabled = true;
                 boxCollider2DsLevers[0].enabled = false;
+                MainCamera.mainCamera.fordTutorial = true;
             }
         }
         if(positionPlayer.position.x < 81 && positionPlayer.position.x > 79 && positionPlayer.position.y > 44)

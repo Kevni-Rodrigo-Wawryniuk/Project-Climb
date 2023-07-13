@@ -11,6 +11,9 @@ TagManager:
   - Wall
   - Platform
   - Lever
+  - bullet
+  - Point
+  - tutorial
   layers:
   - Default
   - TransparentFX
@@ -23,8 +26,8 @@ TagManager:
   - Platform
   - Lever
   - BackGround
-  - 
-  - 
+  - bullet
+  - Point
   - 
   - 
   - 
